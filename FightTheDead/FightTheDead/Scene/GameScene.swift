@@ -10,6 +10,8 @@ class GameScene: SKScene {
     
     private var spawnManager: ZombieSpawner?
     private var zombies: [Zombie] = []
+    private var walls: [Wall] = []
+    //private var turrets: [Turret] = []
     private let background = SKSpriteNode(imageNamed: "background1")
     
     //level setup
@@ -26,6 +28,7 @@ class GameScene: SKScene {
     
     deinit {
         zombies = []
+        walls = []
     }
     
     /// update method
@@ -49,20 +52,19 @@ class GameScene: SKScene {
         var toBeDeleted : [Int] = []
         
         for zombie in zombies {
-            // collision code here, only returns an object if a collision occured
-            // we can assume that there is only ever going to be one ".first"
-            // because we are checking each zombie against only the player.
-            //let catlady = zombie.collision(items: [player]).first
             
-            // if a zombie collides
-            //if let _ = catlady {
-              //  print("Collision")
-                // removing the zombie from the scene
-                //zombie.removeFromParent()
-                
-                // putting the index of the current zombie on a list to remove our local reference
-                //toBeDeleted.append(zombies.index(of: zombie)!)
-            //}
+             for wall in walls {
+                let collisionWall = zombie.collision(items: [wall]).first
+                print("Collision")
+                // if a zombie collides with a wall
+                if let _ = collisionWall {
+                    print("Collision")
+                    if(!zombie.attacking)
+                    {
+                        zombie.attackWall()
+                    }
+                }
+            }
         }
         
         deleteZombies(toBeDeleted)
@@ -76,10 +78,16 @@ class GameScene: SKScene {
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         super.touchesBegan(touches, with: event)
         
-        guard let touch = touches.first else {
-            return
+        if let touch = touches.first {
+            let position = touch.location(in: self)
+            print(position.x)
+            print(position.y)
+            
+            let newWall = Wall()
+            addChild(newWall)
+            newWall.position =  position
+            walls.append(newWall)
         }
-        
     }
     
     /// we use this helper function to delete things from our zombie array

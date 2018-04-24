@@ -12,6 +12,7 @@ import SpriteKit
 class Wall : GameObject {
     
     static var health: CGFloat = 1
+    var dead = false
     init() {
         super.init(imageName: "wall1")
         name = "cat"
@@ -28,9 +29,9 @@ class Wall : GameObject {
             return
         }
         
-        if(health < 0)
+        if(Wall.health < 0)
         {
-            self.delete()
+            dead = true
         }
     }
 }

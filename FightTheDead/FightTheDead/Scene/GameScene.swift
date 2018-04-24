@@ -54,14 +54,23 @@ class GameScene: SKScene {
         for zombie in zombies {
             
              for wall in walls {
-                let collisionWall = zombie.collision(items: [wall]).first
-                print("Collision")
-                // if a zombie collides with a wall
-                if let _ = collisionWall {
+                
+                if(wall.dead)
+                {
+                    wall.removeFromParent()
+                    
+                }
+                else
+                {
+                    let collisionWall = zombie.collision(items: [wall]).first
                     print("Collision")
-                    if(!zombie.attacking)
-                    {
-                        zombie.attackWall()
+                    // if a zombie collides with a wall
+                    if let _ = collisionWall {
+                        print("Collision")
+                        if(!zombie.attacking)
+                        {
+                            zombie.attackWall()
+                        }
                     }
                 }
             }

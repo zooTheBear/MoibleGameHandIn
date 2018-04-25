@@ -9,10 +9,8 @@
 import Foundation
 import SpriteKit
 
-/// a base game object class that we use to provide simple shared functionality
 class GameObject: SKSpriteNode {
 
-    // a counter for the position that auto increments with each new game object in the init
     static var zCounter: CGFloat = 1
     
     var deltaTime: TimeInterval = 0.0
@@ -30,23 +28,16 @@ class GameObject: SKSpriteNode {
         fatalError("init(coder:) has not been implemented")
     }
     
-    /// update injecting time from the game loop
-    /// - Parameter currentTime: current time from the game loops
     func update(_ currentTime: TimeInterval) {
         guard let lastUpdateTime = lastUpdateTime else {
             self.lastUpdateTime = currentTime
             return
         }
-        // calculating delta time
         deltaTime = currentTime - lastUpdateTime
         
         self.lastUpdateTime = currentTime
     }
 
-    /// A simple collision detection function
-    ///
-    /// - Parameter items: the game objects you wish to test against
-    /// - Returns: an array of game objects you collided with, could be empty if no collisions
     func collision(items:[GameObject]) -> [GameObject] {
         var collision: Bool
         var colliders: [GameObject] = []

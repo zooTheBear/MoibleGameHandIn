@@ -80,7 +80,6 @@ class GameScene: SKScene {
         addChild(scoreLable)
         addChild(coinLabel)
         addChild(healthLable)
-    
         addChild(selectWallImage)
         addChild(selectTurretImage)
         addChild(background)

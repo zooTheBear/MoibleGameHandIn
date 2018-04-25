@@ -171,12 +171,19 @@
 		37ED2BA12087DBDA00CD3DDA /* FightTheDead */ = {
 			isa = PBXGroup;
 			children = (
+				37ED2BEE2087DDE900CD3DDA /* ZombieSpawner.swift */,
+				37ED2BA82087DBDA00CD3DDA /* GameScene.swift */,
+				37ED2BE12087DCB400CD3DDA /* Base.swift */,
+				37ED2BE22087DCB400CD3DDA /* GameObject.swift */,
+				37ED2BE32087DCB400CD3DDA /* Turret.swift */,
+				37ED2BE42087DCB400CD3DDA /* Wall.swift */,
+				37ED2BE52087DCB400CD3DDA /* Zombie.swift */,
+				379988312090D54F00C0188B /* Shot.swift */,
+				37ED2BE62087DCB400CD3DDA /* ZombieFactory.swift */,
 				37ED2BD92087DC9400CD3DDA /* Utilities */,
-				37ED2BD82087DC4500CD3DDA /* Scene */,
 				37ED2BA22087DBDA00CD3DDA /* AppDelegate.swift */,
 				37ED2BAA2087DBDA00CD3DDA /* GameViewController.swift */,
 				37ED2BAC2087DBDA00CD3DDA /* Main.storyboard */,
-				37ED2BE02087DCB400CD3DDA /* GameObjects */,
 				37ED2BAF2087DBDA00CD3DDA /* Assets.xcassets */,
 				37ED2BB12087DBDA00CD3DDA /* LaunchScreen.storyboard */,
 				37ED2BB42087DBDA00CD3DDA /* Info.plist */,
@@ -202,15 +209,6 @@
 			path = FightTheDeadUITests;
 			sourceTree = "<group>";
 		};
-		37ED2BD82087DC4500CD3DDA /* Scene */ = {
-			isa = PBXGroup;
-			children = (
-				37ED2BA82087DBDA00CD3DDA /* GameScene.swift */,
-				37ED2BEE2087DDE900CD3DDA /* ZombieSpawner.swift */,
-			);
-			path = Scene;
-			sourceTree = "<group>";
-		};
 		37ED2BD92087DC9400CD3DDA /* Utilities */ = {
 			isa = PBXGroup;
 			children = (
@@ -219,20 +217,6 @@
 				37ED2BDC2087DC9400CD3DDA /* CGPoint+VectorMath.swift */,
 			);
 			path = Utilities;
-			sourceTree = "<group>";
-		};
-		37ED2BE02087DCB400CD3DDA /* GameObjects */ = {
-			isa = PBXGroup;
-			children = (
-				37ED2BE12087DCB400CD3DDA /* Base.swift */,
-				37ED2BE22087DCB400CD3DDA /* GameObject.swift */,
-				37ED2BE32087DCB400CD3DDA /* Turret.swift */,
-				37ED2BE42087DCB400CD3DDA /* Wall.swift */,
-				37ED2BE52087DCB400CD3DDA /* Zombie.swift */,
-				379988312090D54F00C0188B /* Shot.swift */,
-				37ED2BE62087DCB400CD3DDA /* ZombieFactory.swift */,
-			);
-			path = GameObjects;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */

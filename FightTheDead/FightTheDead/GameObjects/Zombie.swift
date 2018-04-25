@@ -173,6 +173,26 @@ class Zombie: GameObject {
         attacking = true
     }
     
+    func walk(){
+        
+        if(self.type == ZombieType.weak)
+        {
+            self.run(SKAction.repeatForever(SKAction.animate(with: weakZombieImage, timePerFrame: Zombie.timePerFrame)))
+            
+        }
+        else if(self.type == ZombieType.strong)
+        {
+            self.run(SKAction.repeatForever(SKAction.animate(with: strongZombieImage, timePerFrame: Zombie.timePerFrame)))
+        }
+        else
+        {
+            self.run(SKAction.repeatForever(SKAction.animate(with: normalZombieImage, timePerFrame: Zombie.timePerFrame)))
+        }
+        attacking = false
+    }
+    
+    
+    
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         super.touchesBegan(touches, with: event)
         attackWall()

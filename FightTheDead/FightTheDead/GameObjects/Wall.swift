@@ -11,7 +11,7 @@ import SpriteKit
 
 class Wall : GameObject {
     
-    static var health: CGFloat = 1
+    var health: CGFloat = 1000
     var dead = false
     init() {
         super.init(imageName: "wall1")
@@ -29,10 +29,14 @@ class Wall : GameObject {
             return
         }
         
-        if(Wall.health < 0)
+        if(self.health <= 0)
         {
-            dead = true
+            self.dead = true
         }
+    }
+    
+    func takeDamge(damgeAmount: CGFloat){
+        self.health -= damgeAmount
     }
 }
 

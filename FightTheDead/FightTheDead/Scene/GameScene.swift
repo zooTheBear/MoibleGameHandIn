@@ -52,31 +52,56 @@ class GameScene: SKScene {
         var toBeDeleted : [Int] = []
         
         for zombie in zombies {
-            
+            var attackingAWall = false
              for wall in walls {
+                let collisionWall = zombie.collision(items: [wall]).first
                 
-                if(wall.dead)
+                //if a zombie collides with a wall
+                //if(!attackingAWall)
+                //{
+                if (wall.dead)
                 {
-                    wall.removeFromParent()
+                    //wall.removeFromParent()
+                    //toBeDeleted.append(walls.index(of: wall)!)
+                    let fire = Bundle.main.path(forResource: "MyParticle", ofType: "sks")!
+                    let death = NSKeyedUnarchiver.unarchiveObject(withFile: fire) as! SKEmitterNode
+                    death.xScale = 1
+                    death.yScale = 1
+                    death.position.x = wall.position.x
+                    death.position.y = wall.position.y
+                    death.zPosition = 10
+                    self.addChild(death)
+                    
+                    wall.position.x = -10000
                     
                 }
-                else
-                {
-                    let collisionWall = zombie.collision(items: [wall]).first
-                    print("Collision")
-                    // if a zombie collides with a wall
-                    if let _ = collisionWall {
-                        print("Collision")
-                        if(!zombie.attacking)
-                        {
-                            zombie.attackWall()
-                        }
+                if let _ = collisionWall {
+                    if(!zombie.attacking)
+                    {
+                        print("Calling")
+                        zombie.attackWall()
                     }
+                    wall.takeDamge(damgeAmount: 2)
+                    attackingAWall = true
+                }
+                else if(zombie.attacking)
+                {
+                    zombie.walk()
+                }
+                //}
+            }
+            print(walls.count)
+            if(walls.count == 0)
+            {
+                if(zombie.attacking)
+                {
+                    zombie.walk()
                 }
             }
         }
+        //deleteZombies(toBeDeleted)
         
-        deleteZombies(toBeDeleted)
+        //deleteWalls(wallsToBeDeleted)
         guard let zombie = spawnManager?.update(time: currentTime) else {
             return
         }
@@ -99,9 +124,7 @@ class GameScene: SKScene {
         }
     }
     
-    /// we use this helper function to delete things from our zombie array
-    ///
-    /// - Parameter zombieIndexes: the indexes of zombies to be deleted from the zombie array
+    
     private func deleteZombies(_ zombieIndexes: [Int]) {
         
         // flip the index order to remove the later before the lower index

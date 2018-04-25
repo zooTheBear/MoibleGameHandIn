@@ -18,11 +18,11 @@ enum ZombieType: UInt32 {
     var speed: CGFloat {
         switch self {
         case .weak:
-            return 20.0
+            return 60.0
         case .normal:
-            return 15.0
+            return 45.0
         case .strong:
-            return 10.0
+            return 30.0
         }
     }
     

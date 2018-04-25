@@ -11,6 +11,7 @@ class GameScene: SKScene {
     
     var coinLabel: SKLabelNode!
     var scoreLable: SKLabelNode!
+    var healthLable: SKLabelNode!
     
     var coins = 100 {
         didSet {
@@ -20,6 +21,11 @@ class GameScene: SKScene {
     var score = 0 {
         didSet {
             scoreLable.text = "Score: \(score)"
+        }
+    }
+    var health = 3 {
+        didSet {
+            healthLable.text = "Health: \(health)"
         }
     }
     
@@ -65,11 +71,16 @@ class GameScene: SKScene {
         scoreLable.horizontalAlignmentMode = .right
         scoreLable.position = CGPoint(x: self.size.width/2, y: self.size.height-100)
         
+        healthLable = SKLabelNode(fontNamed: "Chalkduster")
+        healthLable.text = "Health: 3"
+        healthLable.horizontalAlignmentMode = .right
+        healthLable.position = CGPoint(x: self.size.width - 300, y: self.size.height-100)
+        
         
         addChild(scoreLable)
         addChild(coinLabel)
-        
-        
+        addChild(healthLable)
+    
         addChild(selectWallImage)
         addChild(selectTurretImage)
         addChild(background)
@@ -164,6 +175,13 @@ class GameScene: SKScene {
                     score += 3
                 }
                 
+                zombie.removeFromParent()
+                toBeDeletedZombies.append(zombies.index(of: zombie)!)
+                zombieActionDone = true
+            }
+            if(zombie.position.x < 0)
+            {
+                health -= 1
                 zombie.removeFromParent()
                 toBeDeletedZombies.append(zombies.index(of: zombie)!)
                 zombieActionDone = true
@@ -288,6 +306,11 @@ class GameScene: SKScene {
                 turrets.append(newTurret)
                 turretIsSelected = false
                 coins -= 100
+            }
+            else
+            {
+                turretIsSelected = false
+                wallIsSelected = false
             }
         }
     }

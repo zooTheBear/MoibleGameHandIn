@@ -74,6 +74,23 @@ class ZombieSpawner {
         
     }
     
+    
+    
+    
+    //wall.removeFromParent()
+    //toBeDeleted.append(walls.index(of: wall)!)
+    /*let fire = Bundle.main.path(forResource: "MyParticle", ofType: "sks")!
+     let death = NSKeyedUnarchiver.unarchiveObject(withFile: fire) as! SKEmitterNode
+     death.xScale = 1
+     death.yScale = 1
+     death.position.x = wall.position.x
+     death.position.y = wall.position.y
+     death.zPosition = 10
+     self.addChild(death)*/
+    
+    
+    
+    
     /// - generate a position inside the spawn area
     private func generateSpawnPosition() -> CGPoint {
         return CGPoint(x: random(min: Double(spawnArea.minX), max: Double(spawnArea.maxX)),

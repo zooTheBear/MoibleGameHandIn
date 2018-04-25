@@ -18,7 +18,7 @@
 		370AADC1209002D00039A84A /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 370AADC0209002CF0039A84A /* StoreKit.framework */; };
 		370AADC3209002D70039A84A /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 370AADC2209002D70039A84A /* SystemConfiguration.framework */; };
 		370AADC5209002EE0039A84A /* AdSupport.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 370AADC4209002EE0039A84A /* AdSupport.framework */; };
-		370AADCE209004170039A84A /* GoogleMobileAds.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 370AADCD209004170039A84A /* GoogleMobileAds.framework */; };
+		379988322090D54F00C0188B /* Shot.swift in Sources */ = {isa = PBXBuildFile; fileRef = 379988312090D54F00C0188B /* Shot.swift */; };
 		37ED2BA32087DBDA00CD3DDA /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37ED2BA22087DBDA00CD3DDA /* AppDelegate.swift */; };
 		37ED2BA92087DBDA00CD3DDA /* GameScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37ED2BA82087DBDA00CD3DDA /* GameScene.swift */; };
 		37ED2BAB2087DBDA00CD3DDA /* GameViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37ED2BAA2087DBDA00CD3DDA /* GameViewController.swift */; };
@@ -68,7 +68,7 @@
 		370AADC0209002CF0039A84A /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
 		370AADC2209002D70039A84A /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 		370AADC4209002EE0039A84A /* AdSupport.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AdSupport.framework; path = System/Library/Frameworks/AdSupport.framework; sourceTree = SDKROOT; };
-		370AADCD209004170039A84A /* GoogleMobileAds.framework */ = {isa = PBXFileReference; lastKnownFileType = file; path = GoogleMobileAds.framework; sourceTree = "<group>"; };
+		379988312090D54F00C0188B /* Shot.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Shot.swift; sourceTree = "<group>"; };
 		37ED2B9F2087DBDA00CD3DDA /* FightTheDead.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FightTheDead.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		37ED2BA22087DBDA00CD3DDA /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		37ED2BA82087DBDA00CD3DDA /* GameScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameScene.swift; sourceTree = "<group>"; };
@@ -100,7 +100,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				370AADCE209004170039A84A /* GoogleMobileAds.framework in Frameworks */,
 				370AADC5209002EE0039A84A /* AdSupport.framework in Frameworks */,
 				370AADC3209002D70039A84A /* SystemConfiguration.framework in Frameworks */,
 				370AADC1209002D00039A84A /* StoreKit.framework in Frameworks */,
@@ -133,7 +132,6 @@
 		370AADB3209002740039A84A /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				370AADCD209004170039A84A /* GoogleMobileAds.framework */,
 				370AADC4209002EE0039A84A /* AdSupport.framework */,
 				370AADC2209002D70039A84A /* SystemConfiguration.framework */,
 				370AADC0209002CF0039A84A /* StoreKit.framework */,
@@ -231,6 +229,7 @@
 				37ED2BE32087DCB400CD3DDA /* Turret.swift */,
 				37ED2BE42087DCB400CD3DDA /* Wall.swift */,
 				37ED2BE52087DCB400CD3DDA /* Zombie.swift */,
+				379988312090D54F00C0188B /* Shot.swift */,
 				37ED2BE62087DCB400CD3DDA /* ZombieFactory.swift */,
 			);
 			path = GameObjects;
@@ -375,6 +374,7 @@
 				37ED2BEC2087DCB400CD3DDA /* ZombieFactory.swift in Sources */,
 				37ED2BE72087DCB400CD3DDA /* Base.swift in Sources */,
 				37ED2BEF2087DDE900CD3DDA /* ZombieSpawner.swift in Sources */,
+				379988322090D54F00C0188B /* Shot.swift in Sources */,
 				37ED2BDF2087DC9400CD3DDA /* CGPoint+VectorMath.swift in Sources */,
 				37ED2BE82087DCB400CD3DDA /* GameObject.swift in Sources */,
 				37ED2BEA2087DCB400CD3DDA /* Wall.swift in Sources */,

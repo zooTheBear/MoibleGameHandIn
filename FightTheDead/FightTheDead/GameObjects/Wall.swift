@@ -11,11 +11,11 @@ import SpriteKit
 
 class Wall : GameObject {
     
-    var health: CGFloat = 1000
+    var health: CGFloat = 400
     var dead = false
     init() {
         super.init(imageName: "wall1")
-        name = "cat"
+        name = "Wall"
         self.size = CGSize(width: 75, height: 150)
     }
     

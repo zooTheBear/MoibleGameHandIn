@@ -25,6 +25,17 @@ enum ZombieType: UInt32 {
             return 10.0
         }
     }
+    
+    var health: CGFloat {
+        switch self {
+        case .weak:
+            return 2.0
+        case .normal:
+            return 3.0
+        case .strong:
+            return 5.0
+        }
+    }
 }
 
 // MARK: - Constants
@@ -109,8 +120,10 @@ class Zombie: GameObject {
     
     
     let type: ZombieType
-    
     var attacking = false
+    
+    var wallSelected = false
+    var turretSelected = false
     
     var vel : CGPoint?
     init(type: ZombieType) {
@@ -141,7 +154,16 @@ class Zombie: GameObject {
         fatalError("init(coder:) has not been implemented")
     }
     
+    var myHealth = CGFloat(5)
+    var isDead = false
+    var assingHealth = true
+    
     override func update(_ currentTime: TimeInterval) {
+        if(assingHealth)
+        {
+            myHealth = type.health
+            assingHealth = false
+        }
         // calling super so we can use deltaTime recording in the super class
         super.update(currentTime)
         guard let direction = vel?.asUnitVector else {
@@ -151,6 +173,10 @@ class Zombie: GameObject {
         if(!attacking)
         {
             position = position.travel(in: direction, at: type.speed, for: deltaTime)
+        }
+        if(myHealth <= 0)
+        {
+            isDead = true
         }
     }
     
@@ -191,11 +217,15 @@ class Zombie: GameObject {
         attacking = false
     }
     
+    func takeDamge(){
+        self.myHealth -= 1
+    }
+    
     
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         super.touchesBegan(touches, with: event)
-        attackWall()
+        takeDamge()
     }
     
 }

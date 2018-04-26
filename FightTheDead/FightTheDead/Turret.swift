@@ -11,12 +11,19 @@ import SpriteKit
 
 class Turret : GameObject {
     
+    //the health of the turret
     var health: CGFloat = 100
+    //the delay for the each shot
     var fireDelay: Double = 3.0
+    //range of the turret
     var range: CGFloat = 1000
+    //stores the time that gets used for the delay
     var storeTime: Double = 0.0
+    //checks if the turret can shoot
     var canShoot = true
+    //makes teh turret to wait before shooting
     var waitForNextShot = false
+    //gets set to true
     var dead = false
     init() {
         super.init(imageName: "Turret")
@@ -27,7 +34,7 @@ class Turret : GameObject {
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
+    //update fucnction of the turret
     override func update(_ currentTime: TimeInterval) {
         super.update(currentTime)
         
@@ -53,7 +60,7 @@ class Turret : GameObject {
         }
         
     }
-    
+    //finds the and returns the closest target to the turret
     func findClosestTarget(zombies: [Zombie])-> CGPoint
     {
         
@@ -77,19 +84,14 @@ class Turret : GameObject {
         }
         return closestPoint
     }
+    //makes it so that the turret waits for delay before shooting againe
     func shoot()
     {
         canShoot = false
     }
     
-    
+    //Reduces the health of the zombie
     func takeDamge(damgeAmount: CGFloat){
-        self.health -= damgeAmount
-    }
-    func shoot(damgeAmount: CGFloat){
-        self.health -= damgeAmount
-    }
-    func findClosestTarget(damgeAmount: CGFloat){
         self.health -= damgeAmount
     }
 }

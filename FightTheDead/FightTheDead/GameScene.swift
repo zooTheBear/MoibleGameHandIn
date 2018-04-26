@@ -8,11 +8,11 @@ import GameplayKit
 
 class GameScene: SKScene {
     
-    
+    //for the score, coins and player health
     var coinLabel: SKLabelNode!
     var scoreLable: SKLabelNode!
     var healthLable: SKLabelNode!
-    
+    //at the start the player has 100 coins
     var coins = 100 {
         didSet {
             coinLabel.text = "Coins: \(coins)"
@@ -23,6 +23,7 @@ class GameScene: SKScene {
             scoreLable.text = "Score: \(score)"
         }
     }
+    //player starts with 100 health
     var health = 3 {
         didSet {
             healthLable.text = "Health: \(health)"
@@ -52,25 +53,25 @@ class GameScene: SKScene {
         background.zPosition = -1
         background.size = self.size
         background.position = CGPoint(x: size.width / 2, y: size.height / 2 )
-        
+        //adds the image of slectable turret to the scene
         selectTurretImage.zPosition = 0
         selectTurretImage.size = CGSize(width: 150, height: 75)
         selectTurretImage.position = CGPoint(x: 300, y: 100)
-        
+        //adds the image of slectable wall to the scene
         selectWallImage.zPosition = 0
         selectWallImage.size = CGSize(width: 150, height: 75)
         selectWallImage.position = CGPoint(x: 600, y: 100)
-        
+        //displays the coins of the player
         coinLabel = SKLabelNode(fontNamed: "Chalkduster")
         coinLabel.text = "Coins: 100"
         coinLabel.horizontalAlignmentMode = .right
         coinLabel.position = CGPoint(x: self.position.x+200, y: self.size.height-100)
-        
+        //displays the score of the player
         scoreLable = SKLabelNode(fontNamed: "Chalkduster")
         scoreLable.text = "Score: 0"
         scoreLable.horizontalAlignmentMode = .right
         scoreLable.position = CGPoint(x: self.size.width/2, y: self.size.height-100)
-        
+        //displays the health of the player
         healthLable = SKLabelNode(fontNamed: "Chalkduster")
         healthLable.text = "Health: 3"
         healthLable.horizontalAlignmentMode = .right
@@ -104,7 +105,7 @@ class GameScene: SKScene {
             return gameObject
         }
         
-        // calling update on all of them
+        // calling update on all of the game objects
         for gameObject in gameObjects {
             gameObject?.update(currentTime)
         }
@@ -112,23 +113,30 @@ class GameScene: SKScene {
         // Collision detection and cleanup
         
         //checks if the turret can shoot
+        //if it can its looks for the cloesest zombie and shoots towards it
         for turret in turrets {
+            //finds the closest zombie
             var shootPosition = turret.findClosestTarget(zombies: zombies)
             
             if(turret.canShoot)
             {
                 if(shootPosition.x != 0 && shootPosition.y != 0)
                 {
+                    //creates a new rocket
                     let newShot = Shot(direction: shootPosition)
+                    //adds the rocket to the scene
                     addChild(newShot)
+                    //sets the rocket position to the turret position
                     newShot.position =  turret.position
+                    //adds the rocket to the shots array
                     shots.append(newShot)
-                    
+                    //lets the turret know that it shot
                     turret.shoot()
                 }
             }
         }
         //collision between the shots and zombie
+        //if there is collsion between the 2 it deletes the rocket and applies damge to the zombie
         var toBeDeletedShots : [Int] = []
         for shot in shots {
             var shotHit = false
@@ -151,13 +159,16 @@ class GameScene: SKScene {
         
         
         
-        
+        //list of zombies that need to be deleted
         var toBeDeletedZombies : [Int] = []
+        //checks each zombie in the array
         for zombie in zombies {
             //makes sure zombie only attackes one wall at a time
             var zombieActionDone = false
+            //checks if the zombie is dead
             if (zombie.isDead)
             {
+                //if a zombie is killed it awards the player based on the type of the zombie
                 if(zombie.type.health == 2)
                 {
                     coins += 10
@@ -173,11 +184,12 @@ class GameScene: SKScene {
                     coins += 30
                     score += 3
                 }
-                
+                //removes the zombie
                 zombie.removeFromParent()
                 toBeDeletedZombies.append(zombies.index(of: zombie)!)
                 zombieActionDone = true
             }
+            //checks if any zombie made it through and if they did it deletes the zombie and reduces the playes health
             if(zombie.position.x < 0)
             {
                 health -= 1
@@ -190,6 +202,7 @@ class GameScene: SKScene {
             var toBeDeletedWalls : [Int] = []
             //loops through all the walls to see if a zombie is colliding with any
              for wall in walls {
+                 //checks if a zombie is collding with a wall
                 let collisionWall = zombie.collision(items: [wall]).first
                 
                 if(!zombieActionDone)
@@ -201,6 +214,7 @@ class GameScene: SKScene {
                         toBeDeletedWalls.append(walls.index(of: wall)!)
                     }
                     //checks for collison between the wall and the turret
+                    //if there is collsion it makes the zombie attack the wall
                     else if let _ = collisionWall {
                         //if the zombie is alreyd doing the attackanimation dont call it againe
                         if(zombie.attacking == false)
@@ -217,20 +231,25 @@ class GameScene: SKScene {
                     }
                 }
             }
+            //calls the delete walls funtion
             deleteWalls(toBeDeletedWalls)
             var toBeDeletedTurrets : [Int] = []
+            //goes through each turret and compares it to the zombie to see if they are colliding
             for turret in turrets {
+                //compares a zombie to a turret to see if they are colliding
                 let collisionTurret = zombie.collision(items: [turret]).first
                 
                 if(!zombieActionDone)
                 {
                     //if the turret health is below  removes the turret
+                    //if the turret is dead it removes it from the scene
                     if (turret.dead)
                     {
                         turret.removeFromParent()
                         toBeDeletedTurrets.append(turrets.index(of: turret)!)
                     }
-                        //checks for collison between the wall and the turret
+                    //checks for collison between the turret and the zombie
+                    //if there is collsion it makes the zombie attack the turret
                     else if let _ = collisionTurret {
                         //if the zombie is alreyd doing the attackanimation dont call it againe
                         if(zombie.attacking == false)
@@ -247,10 +266,13 @@ class GameScene: SKScene {
                     }
                 }
             }
+            //calls the delete turret fucntion
             deleteTurrets(toBeDeletedTurrets)
             
             
             print(currentTime)
+            //this is used to avoid a bug 
+            //makes the zombie walk forward if there are no turrets or walls on the screen
             if(walls.count == 0 && turrets.count == 0)
             {
                 if(zombie.attacking)
@@ -259,11 +281,14 @@ class GameScene: SKScene {
                 }
             }
         }
+        //calls the delete zombie fucntion
         deleteZombies(toBeDeletedZombies)
         
+        //spawns a zombie at a randome location within the rectangle specified
         guard let zombie = spawnManager?.update(time: currentTime) else {
             return
         }
+        //adds the zombie to the array
         zombies.append(zombie)
     }
     
@@ -272,40 +297,54 @@ class GameScene: SKScene {
         super.touchesBegan(touches, with: event)
         if let touch = touches.first {
             let position = touch.location(in: self)
-            print(position.x)
-            print(position.y)
             
             
             
-            
+            //if the tap happened on top of turret slectable sets the turret as select item to be placed down
             if(position.x >= self.position.x + 300-75 && position.x <= self.position.x + (300-75 + selectTurretImage.size.width) && position.y >= self.position.y && position.y <= self.position.y+200)
             {
                 turretIsSelected = true
                 wallIsSelected = false
             }
+            //if the tap happened on top of wall slectable sets the wall as select item to be placed down
             else if(position.x >= self.position.x + 600-75 && position.x <= self.position.x + (600-75 + selectWallImage.size.width) && position.y >= self.position.y && position.y <= self.position.y+200)
             {
                 wallIsSelected = true
                 turretIsSelected = false
             }
+            //checks if the player has enough coins and if he does palces the wall on to the screen
             else if(wallIsSelected && coins > 49)
             {
+                //makes a new wall
                 let newWall = Wall()
+                //adds the wall to the scene
                 addChild(newWall)
+                //sets the position the tap position
                 newWall.position =  position
+                //adds the wall to the array of walls
                 walls.append(newWall)
+                //sets the slectables to false
                 wallIsSelected = false
+                //takes 50 coins from the player
                 coins -= 50
             }
+            //checks if the player has enough coins and if he does palces the turret on to the screen
             else if(turretIsSelected && coins > 99)
             {
+                //makes a new turret
                 let newTurret = Turret()
+                //adds teh turret to the scene
                 addChild(newTurret)
+                //sets the location of the turret to the position of the tap
                 newTurret.position =  position
+                //adds the new turret to the array
                 turrets.append(newTurret)
+                //sets the selected item to false
                 turretIsSelected = false
+                //takes 100 coins from the player
                 coins -= 100
             }
+            //if the player dosnt have enough coins sets his select choice to false
             else
             {
                 turretIsSelected = false
@@ -314,7 +353,7 @@ class GameScene: SKScene {
         }
     }
     
-    
+    //deletes the zombies from the zombie array
     private func deleteZombies(_ zombieIndexes: [Int]) {
         
         // flip the index order to remove the later before the lower index
@@ -324,7 +363,7 @@ class GameScene: SKScene {
             zombies.remove(at: index)
         }
     }
-    
+    //deletes the walls from the wall array
     private func deleteWalls(_ wallIndexes: [Int]) {
         
         // flip the index order to remove the later before the lower index
@@ -334,6 +373,7 @@ class GameScene: SKScene {
             walls.remove(at: index)
         }
     }
+    //deletes shots from the shots array
     private func deleteShots(_ shotIndexes: [Int]) {
         
         // flip the index order to remove the later before the lower index
@@ -343,6 +383,7 @@ class GameScene: SKScene {
             shots.remove(at: index)
         }
     }
+    //deletes the turrets from the turret array
     private func deleteTurrets(_ turretIndexes: [Int]) {
         
         // flip the index order to remove the later before the lower index

@@ -1,6 +1,5 @@
 //
 //  Zombie.swift
-//  ZombieConga
 //
 //  Created by Ahmad Muhammad Z. on 4/17/18.
 //  Copyright © 2018 Ahmad Muhammad Z. All rights reserved.
@@ -11,10 +10,11 @@ import SpriteKit
 
 /// A zombie Enum
 enum ZombieType: UInt32 {
+    //the three type of zombies
     case normal = 0
     case weak
     case strong
-    
+    //speed based on type of zombie
     var speed: CGFloat {
         switch self {
         case .weak:
@@ -25,7 +25,7 @@ enum ZombieType: UInt32 {
             return 30.0
         }
     }
-    
+    //health based on the type of zombie
     var health: CGFloat {
         switch self {
         case .weak:
@@ -38,24 +38,19 @@ enum ZombieType: UInt32 {
     }
 }
 
-// MARK: - Constants
 extension Zombie {
-    
+    //the wait time per frame
     static let timePerFrame = 0.1
-    static let waitTime = 5.0
-    static let defaultTexture = "StrongZombie_1"
     
     struct Textures {
-        //static let zombie1 = "zombie1"
-        //static let zombie2 = "zombie2"
-        //static let zombie3 = "zombie3"
+        static let defaultZombieImage = "zombie1"
     }
     
 }
 
 /// A zombie class
 class Zombie: GameObject {
-    
+    //strongs zombie walking animation
     let strongZombieImage = [SKTexture(imageNamed: "StrongZombie_1"),
                              SKTexture(imageNamed: "StrongZombie_2"),
                              SKTexture(imageNamed: "StrongZombie_3"),
@@ -66,7 +61,7 @@ class Zombie: GameObject {
                              SKTexture(imageNamed: "StrongZombie_8"),
                              SKTexture(imageNamed: "StrongZombie_9"),
                              SKTexture(imageNamed: "StrongZombie_10"),]
-    
+    //normal zombie walking animation
     let normalZombieImage = [SKTexture(imageNamed: "NormalZombie_1"),
                              SKTexture(imageNamed: "NormalZombie_2"),
                              SKTexture(imageNamed: "NormalZombie_3"),
@@ -77,7 +72,7 @@ class Zombie: GameObject {
                              SKTexture(imageNamed: "NormalZombie_8"),
                              SKTexture(imageNamed: "NormalZombie_9"),
                              SKTexture(imageNamed: "NormalZombie_10")]
-    
+     //weak zombie walking animation
     let weakZombieImage = [SKTexture(imageNamed: "WeakZombie_1"),
                              SKTexture(imageNamed: "WeakZombie_2"),
                              SKTexture(imageNamed: "WeakZombie_3"),
@@ -88,7 +83,7 @@ class Zombie: GameObject {
                              SKTexture(imageNamed: "WeakZombie_8"),
                              SKTexture(imageNamed: "WeakZombie_9"),
                              SKTexture(imageNamed: "WeakZombie_10")]
-    
+     //normal zombie attacking animation
     let normalZombieAttackImage = [SKTexture(imageNamed: "nAttack_1"),
                            SKTexture(imageNamed: "nAttack_2"),
                            SKTexture(imageNamed: "nAttack_3"),
@@ -97,7 +92,7 @@ class Zombie: GameObject {
                            SKTexture(imageNamed: "nAttack_6"),
                            SKTexture(imageNamed: "nAttack_7"),
                            SKTexture(imageNamed: "nAttack_8")]
-    
+     //weak zombie attacking animation
     let weakZombieAttackImage = [SKTexture(imageNamed: "wAttack_1"),
                                  SKTexture(imageNamed: "wAttack_2"),
                                  SKTexture(imageNamed: "wAttack_3"),
@@ -106,7 +101,7 @@ class Zombie: GameObject {
                                  SKTexture(imageNamed: "wAttack_6"),
                                  SKTexture(imageNamed: "wAttack_7"),
                                  SKTexture(imageNamed: "wAttack_8")]
-    
+    //strong zombie attacking animation
     let strongZombieAttackImage = [SKTexture(imageNamed: "sAttack_1"),
                                  SKTexture(imageNamed: "sAttack_2"),
                                  SKTexture(imageNamed: "sAttack_3"),
@@ -122,15 +117,12 @@ class Zombie: GameObject {
     let type: ZombieType
     var attacking = false
     
-    var wallSelected = false
-    var turretSelected = false
-    
     var vel : CGPoint?
     init(type: ZombieType) {
         self.type = type
         super.init(imageName: Zombie.defaultTexture)
         isUserInteractionEnabled = true
-        
+        //starts the defualt walking animation based on its type
         if(self.type == ZombieType.weak)
         {
             self.run(SKAction.repeatForever(SKAction.animate(with: weakZombieImage, timePerFrame: Zombie.timePerFrame)))
@@ -144,7 +136,7 @@ class Zombie: GameObject {
         {
             self.run(SKAction.repeatForever(SKAction.animate(with: normalZombieImage, timePerFrame: Zombie.timePerFrame)))
         }
-        
+        //sets the size of the zombie
         self.size = CGSize(width: 75, height: 150)
     }
     
@@ -153,12 +145,15 @@ class Zombie: GameObject {
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
+    //the default health of the zombie
     var myHealth = CGFloat(5)
+    //sets to true if the zombie is dead
     var isDead = false
+    //checks if the zombie health has been assinged based on its type
     var assingHealth = true
     
     override func update(_ currentTime: TimeInterval) {
+        //assings the health based on the type of zombie its is
         if(assingHealth)
         {
             myHealth = type.health
@@ -169,18 +164,19 @@ class Zombie: GameObject {
         guard let direction = vel?.asUnitVector else {
             return
         }
-        
+        //if the zombie is not attacking it makes it move forward
         if(!attacking)
         {
             position = position.travel(in: direction, at: type.speed, for: deltaTime)
         }
+        //if the health below 0 set the zombie to dead
         if(myHealth <= 0)
         {
             isDead = true
         }
     }
     
-    
+    //turns the animation of the zombie attacking based on what type it is
     func attackWall(){
         
         if(self.type == ZombieType.weak)
@@ -198,7 +194,7 @@ class Zombie: GameObject {
         }
         attacking = true
     }
-    
+    //turns the animation of the zombie walking based on what type it is
     func walk(){
         
         if(self.type == ZombieType.weak)
@@ -216,13 +212,13 @@ class Zombie: GameObject {
         }
         attacking = false
     }
-    
+    //Reduces the health by 1
     func takeDamge(){
         self.myHealth -= 1
     }
     
     
-    
+    //when the player taps on the zombie, the health of the zombie is reduced byy 1
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         super.touchesBegan(touches, with: event)
         takeDamge()

@@ -34,6 +34,12 @@ Try to survive as long as you can by killing the zombies trying to get to your b
 
 ## Assets
 
+**Sounds**
+
+`Rock Explosion` [Sound Source](https://freesound.org/people/OwlStorm/sounds/404754/)
+
+`Music` [Sound Source](https://freesound.org/people/DRFX/sounds/338986/)
+
 **Images taken Online**
 
 `Walls` [Image Source](http://www.ludumdare.com/compo/wp-content/uploads/2009/04/wallsheet.png)
@@ -42,9 +48,12 @@ Try to survive as long as you can by killing the zombies trying to get to your b
 
 `Zombie 1` [Image Source](https://opengameart.org/sites/default/files/zombie_2.gif)
 
-`Zombie 2` [Image Source](https://opengameart.org/sites/default/files/Attack%20%285%29_0.png)
+`Zombie 2` [Image Source](https://opengameart.org/content/the-zombie-free-sprites)
+
+`Zombie 3` [Image Source](https://opengameart.org/content/the-zombie-free-sprites)
 
 `Background` [Image Source](https://opengameart.org/sites/default/files/grass_template2_0.jpg)
+
 
 **Sprite Sheets Created**
 

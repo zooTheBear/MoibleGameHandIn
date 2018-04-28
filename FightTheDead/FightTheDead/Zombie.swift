@@ -120,7 +120,7 @@ class Zombie: GameObject {
     var vel : CGPoint?
     init(type: ZombieType) {
         self.type = type
-        super.init(imageName: Zombie.defaultTexture)
+        super.init(imageName: Zombie.Textures.defaultZombieImage)
         isUserInteractionEnabled = true
         //starts the defualt walking animation based on its type
         if(self.type == ZombieType.weak)

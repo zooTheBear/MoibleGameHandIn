@@ -1,10 +1,16 @@
 //
 //  GameScene.swift
-//  ZombieConga
+//  FightTheDead
+//
+//  Created by Ahmad Muhammad Z. on 4/18/18.
+//  Copyright © 2018 Ahmad Muhammad Z. All rights reserved.
 //
 
 import SpriteKit
 import GameplayKit
+//global variables
+var finalScore = 0
+var finalWave = 0
 
 class GameScene: SKScene {
     
@@ -30,6 +36,11 @@ class GameScene: SKScene {
         }
     }
     
+    var zombiesAlive = 0
+    var maxZombiesToSpawn = 0
+    var zombiesSpawned = 0
+    var nextWaveCalled = false
+    
     
     private var spawnManager: ZombieSpawner?
     private var zombies: [Zombie] = []
@@ -41,6 +52,8 @@ class GameScene: SKScene {
     private let selectWallImage = SKSpriteNode(imageNamed: "wallSelect")
     private let selectTurretImage = SKSpriteNode(imageNamed: "FinalTurretSelect")
     
+    let rocketFireSound = SKAction.playSoundFileNamed("rocketSound.wav", waitForCompletion: false)
+    
     var turretIsSelected = false
     var wallIsSelected = false
     
@@ -48,6 +61,10 @@ class GameScene: SKScene {
     override func didMove(to view: SKView) {
         super.didMove(to: view)
         spawnManager = ZombieSpawner(givenSpawnArea: CGRect(x: self.size.width + 10 , y: 200, width: 100, height: self.size.height-200), min: 1, max: 4);
+        //resets the score and wave
+        finalScore = 0
+        finalWave = 0
+        
         spawnManager?.scene = self
         backgroundColor = SKColor.black
         background.zPosition = -1
@@ -188,6 +205,7 @@ class GameScene: SKScene {
                 zombie.removeFromParent()
                 toBeDeletedZombies.append(zombies.index(of: zombie)!)
                 zombieActionDone = true
+                finalScore = score
             }
             //checks if any zombie made it through and if they did it deletes the zombie and reduces the playes health
             if(zombie.position.x < 0)
@@ -196,6 +214,15 @@ class GameScene: SKScene {
                 zombie.removeFromParent()
                 toBeDeletedZombies.append(zombies.index(of: zombie)!)
                 zombieActionDone = true
+                
+                if(health < 1)
+                {
+                    //calls the death scene if the player is dead
+                    let callScene = GameOverScene(size: self.size) // make sure game scene is the same size
+                    callScene.scaleMode = self.scaleMode // same goes for the scale
+                    let sceneTransition = SKTransition.fade(withDuration: 0.5) // transition to scene in set duration
+                    self.view!.presentScene(callScene, transition: sceneTransition) // call scene
+                }
             }
             
             
@@ -210,6 +237,18 @@ class GameScene: SKScene {
                     //if the walll health is below  removes the wall
                     if (wall.dead)
                     {
+                        let deathFireEffect = Bundle.main.path(forResource: "MyParticle", ofType: "sks")!
+                        let deathFire = NSKeyedUnarchiver.unarchiveObject(withFile: deathFireEffect) as! SKEmitterNode
+                        deathFire.xScale = 5
+                        deathFire.yScale = 5
+                        deathFire.position.y = wall.position.y
+                        deathFire.position.x = wall.position.x
+                        deathFire.zPosition = 1
+                        self.addChild(deathFire)
+                        
+                        DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) {
+                            deathFire.removeFromParent()
+                        }
                         wall.removeFromParent()
                         toBeDeletedWalls.append(walls.index(of: wall)!)
                     }
@@ -245,6 +284,18 @@ class GameScene: SKScene {
                     //if the turret is dead it removes it from the scene
                     if (turret.dead)
                     {
+                        let deathFireEffect = Bundle.main.path(forResource: "MyParticle", ofType: "sks")!
+                        let deathFire = NSKeyedUnarchiver.unarchiveObject(withFile: deathFireEffect) as! SKEmitterNode
+                        deathFire.xScale = 5
+                        deathFire.yScale = 5
+                        deathFire.position.y = turret.position.y
+                        deathFire.position.x = turret.position.x
+                        deathFire.zPosition = 1
+                        self.addChild(deathFire)
+                        
+                        DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) {
+                            deathFire.removeFromParent()
+                        }
                         turret.removeFromParent()
                         toBeDeletedTurrets.append(turrets.index(of: turret)!)
                     }
@@ -285,11 +336,30 @@ class GameScene: SKScene {
         deleteZombies(toBeDeletedZombies)
         
         //spawns a zombie at a randome location within the rectangle specified
-        guard let zombie = spawnManager?.update(time: currentTime) else {
-            return
+        if(zombies.count == 0 && !nextWaveCalled)
+        {
+            nextWave();
+            nextWaveCalled = true
         }
-        //adds the zombie to the array
-        zombies.append(zombie)
+        
+        if(zombiesSpawned != maxZombiesToSpawn)
+        {
+            let tempCounter = zombies.count
+            guard let zombie = spawnManager?.update(time: currentTime) else {
+                return
+            }
+            //adds the zombie to the array
+            zombies.append(zombie)
+            //this is to make sure a zombie was spawned
+            if(tempCounter < zombies.count)
+            {
+                zombiesSpawned += 1
+            }
+        }
+        else
+        {
+            nextWaveCalled = false
+        }
     }
     
     //on touch
@@ -353,6 +423,25 @@ class GameScene: SKScene {
         }
     }
     
+    //sets the variables for the next wave
+    private func nextWave() {
+        
+        maxZombiesToSpawn += 3
+        zombiesSpawned = 0
+        finalWave += 1
+        
+        let nextWaveTest = SKLabelNode(fontNamed: "Chalkduster")
+        nextWaveTest.text = "Wave \(finalWave)"
+        nextWaveTest.fontSize = 125
+        nextWaveTest.fontColor = SKColor.white
+        nextWaveTest.position = CGPoint(x: self.size.width / 2, y: self.size.height / 2)
+        nextWaveTest.zPosition = 1
+        self.addChild(nextWaveTest)
+        
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) {
+            nextWaveTest.removeFromParent()
+        }
+    }
     //deletes the zombies from the zombie array
     private func deleteZombies(_ zombieIndexes: [Int]) {
         

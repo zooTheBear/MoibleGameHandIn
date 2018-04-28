@@ -21,7 +21,7 @@ class ZombieFactory {
         return Zombie(type: zombieType)
     }
     
-    // creates a random zombie
+    // Genrates a randome number between 1 and 3 and chose the zombie based on that
     private func randomZombie() -> Zombie {
         let rand: UInt32 = arc4random() % 3
         let zombieType = ZombieType(rawValue: rand)

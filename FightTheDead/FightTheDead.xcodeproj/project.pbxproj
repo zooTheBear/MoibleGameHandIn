@@ -37,6 +37,11 @@
 		37ED2BEB2087DCB400CD3DDA /* Zombie.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37ED2BE52087DCB400CD3DDA /* Zombie.swift */; };
 		37ED2BEC2087DCB400CD3DDA /* ZombieFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37ED2BE62087DCB400CD3DDA /* ZombieFactory.swift */; };
 		37ED2BEF2087DDE900CD3DDA /* ZombieSpawner.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37ED2BEE2087DDE900CD3DDA /* ZombieSpawner.swift */; };
+		A1D7F5D82093C15E008FBD0D /* MainMenuScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1D7F5D72093C15E008FBD0D /* MainMenuScene.swift */; };
+		A1D7F5DA2093CD10008FBD0D /* GameOverScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1D7F5D92093CD10008FBD0D /* GameOverScene.swift */; };
+		A1D7F5DD2093DF78008FBD0D /* rocketSound.wav in Resources */ = {isa = PBXBuildFile; fileRef = A1D7F5DC2093DF78008FBD0D /* rocketSound.wav */; };
+		A1D7F5E22093E255008FBD0D /* music.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = A1D7F5E12093E255008FBD0D /* music.mp3 */; };
+		A1D7F5E82093EC82008FBD0D /* GoogleMobileAds.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A1D7F5E72093EC82008FBD0D /* GoogleMobileAds.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -93,6 +98,11 @@
 		37ED2BE52087DCB400CD3DDA /* Zombie.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Zombie.swift; sourceTree = "<group>"; };
 		37ED2BE62087DCB400CD3DDA /* ZombieFactory.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ZombieFactory.swift; sourceTree = "<group>"; };
 		37ED2BEE2087DDE900CD3DDA /* ZombieSpawner.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ZombieSpawner.swift; sourceTree = "<group>"; };
+		A1D7F5D72093C15E008FBD0D /* MainMenuScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainMenuScene.swift; sourceTree = "<group>"; };
+		A1D7F5D92093CD10008FBD0D /* GameOverScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameOverScene.swift; sourceTree = "<group>"; };
+		A1D7F5DC2093DF78008FBD0D /* rocketSound.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = rocketSound.wav; sourceTree = "<group>"; };
+		A1D7F5E12093E255008FBD0D /* music.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = music.mp3; sourceTree = "<group>"; };
+		A1D7F5E72093EC82008FBD0D /* GoogleMobileAds.framework */ = {isa = PBXFileReference; lastKnownFileType = file; name = GoogleMobileAds.framework; path = ../../GoogleMobileAds.framework; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -100,6 +110,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A1D7F5E82093EC82008FBD0D /* GoogleMobileAds.framework in Frameworks */,
 				370AADC5209002EE0039A84A /* AdSupport.framework in Frameworks */,
 				370AADC3209002D70039A84A /* SystemConfiguration.framework in Frameworks */,
 				370AADC1209002D00039A84A /* StoreKit.framework in Frameworks */,
@@ -132,6 +143,7 @@
 		370AADB3209002740039A84A /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				A1D7F5E72093EC82008FBD0D /* GoogleMobileAds.framework */,
 				370AADC4209002EE0039A84A /* AdSupport.framework */,
 				370AADC2209002D70039A84A /* SystemConfiguration.framework */,
 				370AADC0209002CF0039A84A /* StoreKit.framework */,
@@ -171,10 +183,13 @@
 		37ED2BA12087DBDA00CD3DDA /* FightTheDead */ = {
 			isa = PBXGroup;
 			children = (
+				A1D7F5DB2093DF46008FBD0D /* sounds */,
 				37ED2BEE2087DDE900CD3DDA /* ZombieSpawner.swift */,
 				37ED2BA82087DBDA00CD3DDA /* GameScene.swift */,
+				A1D7F5D72093C15E008FBD0D /* MainMenuScene.swift */,
 				37ED2BE12087DCB400CD3DDA /* Base.swift */,
 				37ED2BE22087DCB400CD3DDA /* GameObject.swift */,
+				A1D7F5D92093CD10008FBD0D /* GameOverScene.swift */,
 				37ED2BE32087DCB400CD3DDA /* Turret.swift */,
 				37ED2BE42087DCB400CD3DDA /* Wall.swift */,
 				37ED2BE52087DCB400CD3DDA /* Zombie.swift */,
@@ -217,6 +232,15 @@
 				37ED2BDC2087DC9400CD3DDA /* CGPoint+VectorMath.swift */,
 			);
 			path = Utilities;
+			sourceTree = "<group>";
+		};
+		A1D7F5DB2093DF46008FBD0D /* sounds */ = {
+			isa = PBXGroup;
+			children = (
+				A1D7F5E12093E255008FBD0D /* music.mp3 */,
+				A1D7F5DC2093DF78008FBD0D /* rocketSound.wav */,
+			);
+			path = sounds;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -330,6 +354,8 @@
 				37ED2BB02087DBDA00CD3DDA /* Assets.xcassets in Resources */,
 				37ED2BB32087DBDA00CD3DDA /* LaunchScreen.storyboard in Resources */,
 				370AAD45208FFA430039A84A /* MyParticle.sks in Resources */,
+				A1D7F5E22093E255008FBD0D /* music.mp3 in Resources */,
+				A1D7F5DD2093DF78008FBD0D /* rocketSound.wav in Resources */,
 				370AAD46208FFA430039A84A /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -355,7 +381,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A1D7F5D82093C15E008FBD0D /* MainMenuScene.swift in Sources */,
 				37ED2BEC2087DCB400CD3DDA /* ZombieFactory.swift in Sources */,
+				A1D7F5DA2093CD10008FBD0D /* GameOverScene.swift in Sources */,
 				37ED2BE72087DCB400CD3DDA /* Base.swift in Sources */,
 				37ED2BEF2087DDE900CD3DDA /* ZombieSpawner.swift in Sources */,
 				379988322090D54F00C0188B /* Shot.swift in Sources */,
